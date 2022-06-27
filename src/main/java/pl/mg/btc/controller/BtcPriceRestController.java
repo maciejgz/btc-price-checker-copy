@@ -15,14 +15,16 @@ import java.util.Optional;
 public class BtcPriceRestController {
 
     private final BtcPriceRepository repository;
+    private final BtcPriceDtoMapper mapper;
 
-    public BtcPriceRestController(BtcPriceRepository repository) {
+    public BtcPriceRestController(BtcPriceRepository repository, BtcPriceDtoMapper mapper) {
         this.repository = repository;
+        this.mapper = mapper;
     }
 
     @GetMapping(value = "")
     public ResponseEntity<BtcPriceDto> getCurrentPrice() {
         Optional<BtcPriceHistory> price = repository.findFirstByOrderByTimestampDesc();
-        return price.map(btcPriceHistory -> ResponseEntity.ok(BtcPriceDto.ofEntity(btcPriceHistory))).orElseGet(() -> ResponseEntity.ok(null));
+        return price.map(btcPriceHistory -> ResponseEntity.ok(mapper.mapToBtcPriceDto(btcPriceHistory))).orElseGet(() -> ResponseEntity.ok(null));
     }
 }
