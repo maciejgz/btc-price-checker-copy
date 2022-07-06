@@ -31,7 +31,7 @@ public class EthServiceIImpl implements EthService {
     }
 
     @Override
-    @CacheEvict(value = "eth")
+    @CacheEvict(value = "eth", allEntries = true)
     public void clearEthCache() {
         log.debug("cache eth evict");
     }
