@@ -11,6 +11,9 @@ redis-cli --cluster create redis-node-0:6379 redis-node-1:6379 redis-node-2:6379
 TODO: 
 - +ustawić cache spring nawet na jednym node
 - +test redis cache
-- dodać zapis wartości do bazy danych przy użyciu JPA
+- +dodać zapis wartości do bazy danych przy użyciu JPA
+- +optimistic locking - JPA level
+- pesimistic locking
+- distributed lock on the service method
 - testy z 1st level cachem
 - testy z 2nd level cachem

@@ -29,6 +29,11 @@ public class CurrencyServiceImpl implements CurrencyService {
     @CacheEvict(value = "currency", key = "#name")
     public BigDecimal setPrice(String name, BigDecimal price) {
         Optional<CurrencyEntity> currency = repository.findByName(name);
+        try {
+            Thread.sleep(10000);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
         if (currency.isPresent()) {
             currency.get().setPrice(price);
             repository.save(currency.get());
