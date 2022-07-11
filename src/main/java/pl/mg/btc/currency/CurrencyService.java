@@ -8,4 +8,5 @@ public interface CurrencyService {
     BigDecimal setPrice(String name, BigDecimal price);
     void evict();
 
+    String lockedWithLocalReentrant();
 }

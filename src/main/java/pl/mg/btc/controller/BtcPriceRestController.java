@@ -66,4 +66,10 @@ public class BtcPriceRestController {
         currencyService.evict();
         return ResponseEntity.ok().build();
     }
+
+    @GetMapping(value = "/reentrant")
+    public ResponseEntity<String> reentrantLock() {
+        String result = currencyService.lockedWithLocalReentrant();
+        return ResponseEntity.ok(result);
+    }
 }

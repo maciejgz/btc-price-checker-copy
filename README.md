@@ -1,3 +1,10 @@
+## Description
+POC of the following cases: </br>
+- redis distributed cache on the Spring service level
+- spring boot one instance locks - JPA optimistic lock, Spring Transactional lock serializable, reentrant lock
+- distributed lock with Spring Integration and Redis cluster
+- Hibernate different Level caches
+
 ## Deploy
 Deploy to heroku with: `mvnw clean compile package heroku:deploy`
 
@@ -13,7 +20,7 @@ TODO:
 - +test redis cache
 - +dodać zapis wartości do bazy danych przy użyciu JPA
 - +optimistic locking - JPA level
-- pesimistic locking
-- distributed lock on the service method
-- testy z 1st level cachem
-- testy z 2nd level cachem
+- +pesimistic locking - ziamplementować pesimistic lock na jednej instancji - jeśli dwie aplikacje korzystają z jednej bazy to transactional serializable pozwala na zaimplementowanie pessimistic lock: BtcPriceRestController.currency
+- +distributed lock on the service method - distributed lock bazujący na rozwiązaniach springowych nałożony na metody serwisowe (najlepiej zbudowć go w redisie): DistributedLockController
+- testy z 1st level cachem hibernate
+- testy z 2nd level cachem hibernate
