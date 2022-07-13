@@ -4,5 +4,7 @@ public interface DistributedLockService {
 
     String lock();
 
+    String lockWithParam(int callId);
+
     void failLock();
 }

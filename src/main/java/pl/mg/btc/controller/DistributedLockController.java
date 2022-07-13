@@ -1,6 +1,7 @@
 package pl.mg.btc.controller;
 
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -21,6 +22,24 @@ public class DistributedLockController {
     public String lock() {
         return lockService.lock();
     }
+
+    @PutMapping("/lock/{callId}")
+    public String lockWithParam(@PathVariable String callId) {
+        return lockService.lockWithParam(DistributedLockController.isNumeric(callId) ? Integer.parseInt(callId) : 0);
+    }
+
+    public static boolean isNumeric(String strNum) {
+        if (strNum == null) {
+            return false;
+        }
+        try {
+            Double.parseDouble(strNum);
+        } catch (NumberFormatException nfe) {
+            return false;
+        }
+        return true;
+    }
+
 
     @PutMapping("/failLock")
     public String failLock() {

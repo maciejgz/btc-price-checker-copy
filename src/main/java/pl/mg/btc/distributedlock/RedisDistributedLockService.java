@@ -14,6 +14,7 @@ import java.util.concurrent.locks.Lock;
 public class RedisDistributedLockService implements DistributedLockService {
 
     private static final String MY_LOCK_KEY = "btc_lock_key";
+    private static final String PARAMETER_LOCK_KEY = "call_";
 
     private final LockRegistry lockRegistry;
 
@@ -50,7 +51,37 @@ public class RedisDistributedLockService implements DistributedLockService {
                 System.out.println("lock not owned");
             }
         }
+        return returnVal;
+    }
 
+    @Override
+    public String lockWithParam(int callId) {
+        Lock lock;
+        try {
+            lock = lockRegistry.obtain(PARAMETER_LOCK_KEY + callId);
+        } catch (Exception e) {
+            System.out.printf("Unable to obtain lock: %s%n", PARAMETER_LOCK_KEY + callId);
+            return "invalid lock object";
+        }
+        String returnVal = null;
+        try {
+            if (lock.tryLock()) {
+                returnVal = "jdbc lock successful";
+                Thread.sleep(10000);
+            } else {
+                returnVal = "jdbc lock unsuccessful";
+            }
+        } catch (Exception e) {
+            // in a production environment this should log and do something else
+            e.printStackTrace();
+        } finally {
+            // always have this in a `finally` block in case anything goes wrong
+            try {
+                lock.unlock();
+            } catch (IllegalStateException e) {
+                System.out.println("lock not owned");
+            }
+        }
         return returnVal;
     }
 
