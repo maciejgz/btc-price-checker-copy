@@ -66,10 +66,10 @@ public class RedisDistributedLockService implements DistributedLockService {
         String returnVal = null;
         try {
             if (lock.tryLock()) {
-                returnVal = "jdbc lock successful";
+                returnVal = "distributed lock successful";
                 Thread.sleep(10000);
             } else {
-                returnVal = "jdbc lock unsuccessful";
+                returnVal = "distributed lock unsuccessful";
             }
         } catch (Exception e) {
             // in a production environment this should log and do something else
