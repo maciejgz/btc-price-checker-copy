@@ -22,5 +22,6 @@ TODO:
 - +optimistic locking - JPA level by @Version field in [Currency class](src/main/java/pl/mg/btc/currency/CurrencyEntity.java)
 - +pesimistic locking - ziamplementować pesimistic lock na jednej instancji - jeśli dwie aplikacje korzystają z jednej bazy to transactional serializable pozwala na zaimplementowanie pessimistic lock: [BtcPriceRestController/currency](src/main/java/pl/mg/btc/controller/BtcPriceRestController.java)
 - +distributed lock on the service method - distributed lock bazujący na rozwiązaniach springowych (lockRegistry) z wykorzystaniem redisa nałożony na metody serwisowe: [DistributedLockController.java](src/main/java/pl/mg/btc/controller/DistributedLockController.java)
+- symulacja koszyka i transakcji składania zamówienia na kilku instancjach połączonych w klaster dockerowy/k8s - pakiet pl.mg.btc.store
 - testy z 1st level cachem hibernate
 - testy z 2nd level cachem hibernate
