@@ -15,7 +15,7 @@
     <description>btc-price-checker</description>
     <properties>
         <java.version>18</java.version>
-        <mapstruct.version>1.5.1.Final</mapstruct.version>
+        <mapstruct.version>1.5.2.Final</mapstruct.version>
     </properties>
     <dependencies>
         <dependency>
@@ -25,6 +25,10 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-actuator</artifactId>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -64,7 +68,7 @@
         <dependency>
             <groupId>org.mariadb.jdbc</groupId>
             <artifactId>mariadb-java-client</artifactId>
-            <version>3.0.5</version>
+            <version>3.0.6</version>
         </dependency>
         <!-- <dependency>
              <groupId>com.h2database</groupId>
@@ -99,6 +103,10 @@
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <configuration>
+                    <image>
+                        <name>blog-${project.artifactId}:latest</name>
+                    </image>
+                    <pullPolicy>IF_NOT_PRESENT</pullPolicy>
                     <excludes>
                         <exclude>
                             <groupId>org.projectlombok</groupId>
@@ -126,7 +134,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.5.1</version>
+                <version>3.10.1</version>
                 <configuration>
                     <source>${java.version}</source>
                     <target>${java.version}</target>

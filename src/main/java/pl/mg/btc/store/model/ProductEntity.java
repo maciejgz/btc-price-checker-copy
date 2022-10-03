@@ -29,12 +29,12 @@ public class ProductEntity {
         return entity;
     }
 
-    public void buy(long amount) {
+    public void buy(long amount) throws NotEnoughProductsInStorageException {
         if (amount < 0) {
             throw new IllegalArgumentException("amount of products is too low");
         }
         if (amount > this.amount) {
-            throw new IllegalArgumentException("bought amount is greater than the product's amount");
+            throw new NotEnoughProductsInStorageException("bought amount is greater than the product's amount");
         }
         this.amount = this.amount - amount;
     }

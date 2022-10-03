@@ -7,6 +7,9 @@ import org.springframework.transaction.annotation.Transactional;
 import pl.mg.btc.store.model.*;
 
 import java.math.BigDecimal;
+import java.security.SecureRandom;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -49,10 +52,34 @@ public class StoreServiceImp implements StoreService {
 
     @Override
     @Transactional(propagation = Propagation.REQUIRED)
-    public BuyProductResponse buyProduct(BuyProductCommand command) throws ProductNotFoundException {
+    public BuyProductResponse buyProduct(BuyProductCommand command) throws ProductNotFoundException, NotEnoughProductsInStorageException {
         ProductEntity product = getProduct(command.getProductId());
         product.buy(command.getAmount());
         ProductEntity saved = productRepository.save(product);
         return new BuyProductResponse(saved.getId(), saved.getName(), command.getAmount());
+    }
+
+    @Override
+    public List<ProductEntity> getProducts() {
+        Iterable<ProductEntity> products = productRepository.findAll();
+        List<ProductEntity> prods = new ArrayList<>();
+        for (ProductEntity product : products) {
+            prods.add(product);
+        }
+        return prods;
+    }
+
+    @Override
+    public ProductEntity getRandomProduct() {
+        Iterable<ProductEntity> products = productRepository.findAll();
+        List<ProductEntity> prods = new ArrayList<>();
+        for (ProductEntity product : products) {
+            prods.add(product);
+        }
+        SecureRandom random = new SecureRandom();
+        if (prods.isEmpty()) {
+            return null;
+        }
+        return prods.get(random.nextInt(prods.size()));
     }
 }

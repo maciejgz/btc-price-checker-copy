@@ -7,6 +7,7 @@ import pl.mg.btc.store.model.*;
 
 import javax.validation.Valid;
 import java.math.BigDecimal;
+import java.util.List;
 
 @Slf4j
 @RestController
@@ -21,7 +22,7 @@ public class StoreController {
 
     //buy
     @PostMapping(value = "/product/buy")
-    public ResponseEntity<BuyProductResponse> buyProduct(@Valid @RequestBody BuyProductCommand command) throws ProductNotFoundException {
+    public ResponseEntity<BuyProductResponse> buyProduct(@Valid @RequestBody BuyProductCommand command) throws ProductNotFoundException, NotEnoughProductsInStorageException {
         BuyProductResponse buyProductResponse = storeService.buyProduct(command);
         return ResponseEntity.ok(buyProductResponse);
     }
@@ -45,6 +46,19 @@ public class StoreController {
     @GetMapping(value = "/product/{productId}")
     public ResponseEntity<ProductEntity> getProduct(@PathVariable(name = "productId") Long productId) throws ProductNotFoundException {
         ProductEntity product = storeService.getProduct(productId);
+        return ResponseEntity.ok(product);
+    }
+
+    //get products
+    @GetMapping(value = "/product")
+    public ResponseEntity<List<ProductEntity>> getAllProducts() {
+        List<ProductEntity> products = storeService.getProducts();
+        return ResponseEntity.ok(products);
+    }
+
+    @GetMapping(value = "/product/random")
+    public ResponseEntity<ProductEntity> getRandomProduct() {
+        ProductEntity product = storeService.getRandomProduct();
         return ResponseEntity.ok(product);
     }
 }
