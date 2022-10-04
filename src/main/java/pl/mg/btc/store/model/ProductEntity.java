@@ -21,6 +21,9 @@ public class ProductEntity {
 
     private long amount;
 
+    @Version
+    private long version;
+
     public static ProductEntity ofCommand(AddProductCommand command) {
         ProductEntity entity = new ProductEntity();
         entity.setAmount(command.getAmount());

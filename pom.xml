@@ -14,7 +14,7 @@
     <name>btc-price-checker</name>
     <description>btc-price-checker</description>
     <properties>
-        <java.version>18</java.version>
+        <java.version>17</java.version>
         <mapstruct.version>1.5.2.Final</mapstruct.version>
     </properties>
     <dependencies>
@@ -104,7 +104,7 @@
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <configuration>
                     <image>
-                        <name>blog-${project.artifactId}:latest</name>
+                        <name>${project.artifactId}:latest</name>
                     </image>
                     <pullPolicy>IF_NOT_PRESENT</pullPolicy>
                     <excludes>

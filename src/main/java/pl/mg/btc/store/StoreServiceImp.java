@@ -2,6 +2,7 @@ package pl.mg.btc.store;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import pl.mg.btc.store.model.*;
@@ -51,10 +52,15 @@ public class StoreServiceImp implements StoreService {
     }
 
     @Override
-    @Transactional(propagation = Propagation.REQUIRED)
+    @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.SERIALIZABLE)
     public BuyProductResponse buyProduct(BuyProductCommand command) throws ProductNotFoundException, NotEnoughProductsInStorageException {
         ProductEntity product = getProduct(command.getProductId());
         product.buy(command.getAmount());
+        try {
+            Thread.sleep(5000);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
         ProductEntity saved = productRepository.save(product);
         return new BuyProductResponse(saved.getId(), saved.getName(), command.getAmount());
     }
