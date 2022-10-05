@@ -27,8 +27,8 @@ services:
     networks:
       - btc-network
 
-  btc-price-checker:
-    container_name: btc-price-checker
+  btc-price-checker-1:
+    container_name: btc-price-checker-1
     image: 'btc-price-checker:latest'
     ports:
       - "8090:8090"
@@ -41,6 +41,19 @@ services:
     networks:
       - btc-network
 
+  btc-price-checker-2:
+    container_name: btc-price-checker-2
+    image: 'btc-price-checker:latest'
+    ports:
+      - "8091:8091"
+    environment:
+      SPRING_APPLICATION_JSON: '{
+            "server.port": "8091",
+            "spring.datasource.url" : "jdbc:mariadb://btc-maria-db:3306/btc",
+            "spring.redis.host": "btc-redis"
+          }'
+    networks:
+      - btc-network
 
 networks:
   btc-network:
