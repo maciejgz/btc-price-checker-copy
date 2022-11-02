@@ -52,12 +52,13 @@ public class StoreServiceImp implements StoreService {
     }
 
     @Override
-    @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.SERIALIZABLE)
+    @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.READ_COMMITTED)
     public BuyProductResponse buyProduct(BuyProductCommand command) throws ProductNotFoundException, NotEnoughProductsInStorageException {
         ProductEntity product = getProduct(command.getProductId());
         product.buy(command.getAmount());
         try {
-            Thread.sleep(5000);
+            log.debug("sleep...");
+            Thread.sleep(2000);
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }

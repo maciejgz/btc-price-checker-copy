@@ -25,7 +25,6 @@ public class BtcPriceCrawler {
     @Scheduled(fixedRate = 5000)
     @Transactional(propagation = Propagation.REQUIRED)
     public void getBtcPrice() {
-        log.debug("btc");
         Flux<BtcPriceResponse> response = WebClient.create()
                 .get()
                 .uri("https://api.coincap.io/v2/assets?ids=bitcoin")
