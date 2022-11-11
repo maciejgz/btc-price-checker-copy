@@ -18,7 +18,6 @@ public class AsyncController {
         this.mainAsyncService = mainAsyncService;
     }
 
-
     @GetMapping(value = "/{id}/{name}")
     public ResponseEntity<Void> changeName(@PathVariable(name = "id") Long id, @PathVariable(name = "name") String name) {
         mainAsyncService.updateEntitySynchronous(id, name);

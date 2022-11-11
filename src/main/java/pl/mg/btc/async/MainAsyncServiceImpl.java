@@ -23,11 +23,11 @@ public class MainAsyncServiceImpl implements MainAsyncService {
     public void updateEntitySynchronous(Long id, String name) {
         Optional<AsyncEntity> entity = asyncRepository.findById(id);
         asyncService.updateEntityAsynchronous(id, name + "async");
-        try {
+        /*try {
             Thread.sleep(1000);
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
-        }
+        }*/
         if (entity.isPresent()) {
             AsyncEntity ent = entity.get();
             ent.setName(name);
